@@ -1,0 +1,426 @@
+// ===========================================================================
+// Chapter 1 - 5 : skipped
+// ===========================================================================
+
+// ===========================================================================
+// UTILITY FUNCTIONS
+// I will be using the following functions in all following answers
+// as needed for convenience.
+// ===========================================================================
+void arr_switch(??? arr[], int i, int j)
+{
+// NOTE: I intentionally use typeless arr and temp variables as the type of
+//        the variables does not change the logic of the switch function itself.
+    ??? temp
+    temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+}
+
+void linear_sort(??? arr[])
+{
+// NOTE: I intentionally use typeless arr and temp variables as the type of
+//        the variables does not change the logic of the sort function itself.
+    ??? temp
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+    for (int j = i ; j < arr.length ; j++)
+    {
+        if ( arr[j] < arr[i] )
+        {
+        arr_switch(arr, i, j)
+        }
+    }
+    }
+}
+
+void bubble_sort(??? arr[])
+{
+// NOTE: I intentionally use typeless arr and temp variables as the type of
+//        the variables does not change the logic of the sort function itself.
+    ??? temp
+    for (int i = arr.length -1 ; i > 0 ; i--)
+    {
+    for (int j = 0 ; j < i ; j++)
+    {
+        if ( arr[j] > arr[j+1] )
+        {
+        arr_switch(arr, j, j + 1)
+        }
+    }
+    }
+}
+
+int binary_search(??? val, ??? arr[])
+{
+// NOTE: I intentionally use typeless arr and val variables as the type of
+//        the variables does not change the logic of the search function itself.
+    int max_index = arr.length - 1;
+    int min_index = 0;
+    int mid_index = (int) (max_index + min_index) / 2;
+
+    while (min_index <= max_index)
+    {
+    if (arr[mid_index] = val)
+        {
+        return mid_index;
+        }
+    if (arr[mid_index] > val)
+    {
+        max_index = mid_index - 1;
+    } else {
+        min_index = mid_index + 1;
+    }
+    mid_index = (int) (max_index + min_index) / 2;
+    }
+    
+    return -1;
+}
+
+void arr_input(??? arr[])
+{
+// NOTE: I intentionally use a typeless arr variable as the type of
+//        the variable does not change the logic of the input function itself.
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+        arr[i] = input();
+    }
+}
+
+??? arr_sum(??? arr[])
+{
+// NOTE: I intentionally use typeless arr and sum variables as well as 
+//        make the function itself typeless because the type of the variables
+//        and the function does not change the logic of the sum function itself.
+    ??? sum = 0;
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+??? arr_avg(??? arr[])
+{
+// NOTE: I intentionally use typeless arr and sum variables as well as 
+//        make the function itself typeless because the type of the variables
+//        and the function does not change the logic of the average function itself.
+    return (???) arr_sum(arr) / arr.length;
+}
+
+
+// ===========================================================================
+// Chapter 6 Questions - Arrays
+// ===========================================================================
+
+// --------------
+// Answer 01
+// --------------
+void alert_sup_avg(int arr[], int avg)
+{
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+    if (arr[i] > avg then)
+    {
+        alert(arr[i]);
+    }
+    }
+}
+
+void main()
+{
+    int size = 50;
+    int arr = new int[size];
+    int avg = 0;
+
+    arr_input(arr);
+    avg = arr_avg(arr);
+    alert(avg);
+    alert_sup_avg(arr, avg);
+}
+
+// --------------
+// Answer 02
+// --------------
+int get_even_avg(arr)
+{
+    int sum = 0;
+    int count = 0;
+
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+    if (arr[i] % 2 = 0)
+    {
+        sum += arr[i];
+        count++;
+    }
+    }
+
+    if (count > 0)
+    {
+    return sum / count
+    } else {
+    return 0
+    }
+
+}
+
+void main()
+{
+    int size = 100;
+    int arr = new int[size];
+
+    arr_input(arr);
+    alert(get_even_avg)
+
+}
+
+// --------------
+// Answer 03
+// --------------
+int find_uber_num(arr)
+{
+    sum = arr_sum(arr);
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+    if (2 * arr[i] >= sum)
+    {
+        return i;
+    }
+    }
+    return -1;
+}
+void main()
+{
+    int size = 60;
+    int arr = new int[size];
+    int sum = 0;
+    int count = 0;
+
+    arr_input(arr)
+    uber_num_index = find_uber_num(arr)
+    if (uber_num_index > -1)
+    {
+    alert(uber_num_index)
+    }
+
+// --------------
+// Answer 04
+// --------------
+void switch_20_10(arr)
+{
+    ??? temp
+    for (int i = 0 int ; i < 10 ; i++)
+    {
+    arr_switch(arr, i, i + 10)
+    }
+}
+
+void main()
+{
+    int size = 20;
+    ??? arr = new ???[size];
+
+    arr_input(arr)
+    mirror(arr)
+}
+
+// --------------
+// Answer 05
+// --------------
+void arr_alert(arr)
+{
+    for (int i = 0 ; i < arr.length ; i++)
+    {
+    alert(arr[i])
+    }
+}
+
+void left_even(arr)
+{
+    ??? temp;
+    int i = 0;
+    int j = arr.length - 1;
+    while (i < j)
+    {
+    while ((arr[i] % 2 != 0) && (i < j))
+    {
+        i++;
+    }
+    while ((arr[j] % 2 == 0) && (i < j))
+    {
+        j--;
+    }
+    arr_switch(arr, i, j);
+    }
+}
+
+void main()
+{
+    int size = 60;
+    ??? arr = new ???[size];
+
+    arr_input(arr)
+    arr_alert(arr);
+    left_even(arr);
+    arr_alert(arr);
+}
+
+// --------------
+// Answer 06
+// --------------
+void mirror(arr)
+{
+    ??? temp
+    for ({int i = 0 int; j = arr.length }; i < j ; {i++; j--;})
+    {
+    arr_switch(arr, i, j)
+    }
+}
+
+void main()
+{
+    int size = 20;
+    ??? arr = new ???[size];
+
+    arr_input(arr)
+    mirror(arr)
+}
+
+// --------------
+// Answer 07
+// --------------
+bool is_letter(char test_char)
+{
+    char letters = new char[52];
+    letters[0] = 'a';
+    ...
+    letters[51] = 'Z';
+    for (int i = 0 ;i < letters.length ; i++)
+    {
+    if (test_char = letters[i])
+    {
+        return true;
+    }
+    }
+    return false;
+}
+
+bool is_digit(char test_char)
+{
+    char digits = new char[12];
+    digits[0] = '0';
+    ...
+    digits[9] = '9';
+    for (int i = 0 ;i < digits.length ; i++)
+    {
+    if (test_char = digits[i])
+    {
+        return true;
+    }
+    }
+    return false;
+}
+
+void main()
+{
+    int size = 50;
+    char arr = new char[size];
+    int digits = 0;
+    int letters = 0;
+    int other = 0;
+
+    arr_input(arr);
+    for (int i = 0 ;i < digits.length ; i++)
+    {
+    if (is_digit(arr[i]))
+    {
+        digits++
+    } else {
+        if (is_letter(arr[i]))
+        {
+        letters++
+        } else {
+        other++
+        }
+    }
+    }
+    
+}
+
+// --------------
+// Answer 08
+// --------------
+void is_palindrome(arr)
+{
+    for (int i = 0 ; i < (int) arr.length /2 ; i++)
+    {
+    if (arr[i] != arr[arr.length - 1 - i])
+    {
+        return false
+    }
+    }
+    return true
+}
+
+void main()
+{
+    int size = 10;
+    ??? arr = new ???[size];
+
+    arr_input(arr)
+    return is_palindrome(arr)
+}
+
+// --------------
+// Answer 09
+// --------------
+int arr_in_arr(arr_1, arr_2)
+{
+    bool mismatch = false;
+    for (int i = 0 ; i < arr_1.length - arr_2.length ; i++)
+    {
+        mismatch = false;
+        for (int j = 0 ; j < arr_2.length ; j++)
+        {
+            if (arr_1[i+j] != arr_2[j])
+            {
+                mismatch = true;
+                break;
+            }
+        }
+        if (! mismatch)
+            {
+                return i;
+            }
+
+    }
+    return -1;
+}
+
+void main()
+{
+    int size_1 = 10;
+    int size_2 = 50;
+    ??? arr_1 = new ???[size];
+    ??? arr_2 = new ???[size];
+    int arr_2_start ;
+
+    arr_input(arr_1);
+    arr_input(arr_2);
+    arr_2_start = arr_in_arr(arr_1, arr_2);
+    if (arr_2_start > -1)
+    {
+        return arr_2_start;
+    {
+}
+
+// ===========================================================================
+// Example Test Answers
+// ===========================================================================
+
+// --------------
+// Question 01
+// --------------
+START
+END

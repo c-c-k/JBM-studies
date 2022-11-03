@@ -1,0 +1,628 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Intro
+\end_layout
+
+\begin_layout Section
+Basic operations
+\end_layout
+
+\begin_layout Subsection
+Input
+\end_layout
+
+\begin_layout Subsection
+output
+\end_layout
+
+\begin_layout Subsubsection
+question:
+\end_layout
+
+\begin_layout Standard
+what is wrong with the following flowchart? suggest a correction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.1-question.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+answer:
+\end_layout
+
+\begin_layout Standard
+The a variable is read from input but never used, the b variable is printed
+ to output but is never read from input.
+\end_layout
+
+\begin_layout Standard
+A likely correction would be to read and wright the same variable.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.1-answer.png
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question:
+\end_layout
+
+\begin_layout Standard
+What task does the following flowchart accomplish:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.2-question.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+The given flowchart reads two values and prints the second one.
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read two values and then print them.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.3-answer.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read two values and then print them in reverse order.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.4-answer.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read two values and then print only the second one.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.5-answer.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read two values and then print only the first one.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.6-answer.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read a value and then print it three times.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.7-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+What will be the output for the following flowchart if the input is :
+\end_layout
+
+\begin_layout Standard
+-> 15, 32, 1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.2.8-question.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+The output will be:
+\end_layout
+
+\begin_layout Standard
+-> 
+\begin_inset Quotes eld
+\end_inset
+
+15
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+-> 32
+\end_layout
+
+\begin_layout Standard
+-> 1
+\end_layout
+
+\begin_layout Standard
+-> 32
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Operators
+\end_layout
+
+\begin_layout Subsection
+Assignment
+\end_layout
+
+\begin_layout Subsection
+Exercises
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read three values, print their sum and their average.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.1-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read the length and width of a rectangular room and print it's area and
+ perimeter.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.2-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read the diameter and the depth of a cooking pot and print it's volume.
+\end_layout
+
+\begin_layout Standard
+(Area formula is
+\begin_inset Formula $\pi R^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\pi$
+\end_inset
+
+ can be considered to be 3.14, and R is half the diameter)
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.3-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read the length of a movie in minutes and print it's length in hours and
+ minutes.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.4-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read a number that is at least 4 digits long and print it's rightmost digit.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.5-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read a number that is at least 4 digits long and print it's second digit
+ from the right.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.6-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read a three digit number and print it's hundreds digit (which can be assumed
+ to not be 0).
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.7-answer.png
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+read a two digit number and print the sum of its digits.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.8-answer.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read a number between 10 and 99.
+ Reverse the order of it's digits and print the new number.
+\end_layout
+
+\begin_layout Standard
+For example: If the input number is 61 the printed number would be 16.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.9-answer.png
+
+\end_inset
+
+ 
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Standard
+Read a number and print the closest even integer number that is bigger than
+ it.
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename 2.5.10-answer.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conditionals
+\end_layout
+
+\begin_layout Subsubsection
+question
+\end_layout
+
+\begin_layout Subsubsection*
+answer
+\end_layout
+
+\end_body
+\end_document
