@@ -36,7 +36,7 @@ class TestAnswer(test_answer.TestAnswer):
             "This program solves a system of two linear equations\n"
             "Enter the coefficients of the first equation (a1, b1, c1) : "
             "Enter the coefficients of the first equation (a2, b2, c2) : "
-            "The solution is: x=1, y=1"
+            "The solution is: x=1.0 y=1.0\n"
         )
         main()
         output = self.test_stdout.getvalue()
@@ -47,5 +47,5 @@ class TestAnswer(test_answer.TestAnswer):
 # PROGRAM CODE
 # ------------------------------------------------------------
 if __name__ == "__main__":
-    # test_answer.unittest.main()
-    main()
+    test_answer.unittest.main()
+    # main()
