@@ -3,7 +3,6 @@
 
 """"""
 
-
 # ------------------------------------------------------------
 # IMPORTS
 # ------------------------------------------------------------
@@ -36,9 +35,17 @@ class TestAnswer(unittest.TestCase):
     def set_sysargv(self, test_args: list[str]):
         sys.argv = [self.super_argv[0]] + test_args
 
+    def set_stdin(self, value: str):
+        self.test_stdin = io.StringIO(value)
+        sys.stdin = self.test_stdin
+
+    def reset_std_out(self):
+        self.test_stdout = io.StringIO()
+        sys.stdout = self.test_stdout
+
     @staticmethod
-    def set_stdin(value: str):
-        sys.stdin = io.StringIO(value)
+    def lazy_exception_re(exception_text: str):
+        return exception_text[:10] + ".*"
 
     def setUp(self) -> None:
         self.super_stdin = sys.stdin
