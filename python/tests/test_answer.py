@@ -20,6 +20,26 @@ def main():
 
 
 # ------------------------------------------------------------
+# MANUAL TEST
+# ------------------------------------------------------------
+class ManualTest:
+    _test_func: typing.Callable = None
+
+    def __init__(self, test_func: typing.Callable):
+        self._test_func = test_func
+
+    def test_input(self, *inputs: str | int | float):
+        def stdin_readline_override() -> str:
+            next_input = next((str(input_) + "\n" for input_ in inputs))
+            print(next_input, end="")
+            return next_input
+        sys.stdin.readline_ = sys.stdin.readline
+        sys.stdin.readline = stdin_readline_override
+        self._test_func()
+        sys.stdin.readline = sys.stdin.readline_
+
+
+# ------------------------------------------------------------
 # TEST
 # ------------------------------------------------------------
 class TestAnswer(unittest.TestCase):
