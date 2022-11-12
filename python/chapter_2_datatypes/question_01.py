@@ -9,7 +9,7 @@
 # ------------------------------------------------------------
 import unittest
 
-from python.tests import test_answer
+from python.jbm_helper import test_answer
 
 
 # ------------------------------------------------------------

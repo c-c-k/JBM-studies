@@ -6,7 +6,7 @@
 # ------------------------------------------------------------
 # IMPORTS
 # ------------------------------------------------------------
-from python.tests import test_answer
+from python.jbm_helper import test_answer
 
 COLOR_1_PRICE = 10
 COLOR_2_PRICE = 20
