@@ -32,13 +32,13 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_extra_08_a, answer_extra_08_b]
     # Test many words.
-    tester.test(" ".join("word" + str(i) for i in range(1, 15)))
+    tester.test_functions(" ".join("word" + str(i) for i in range(1, 15)))
     # Test no words.
-    tester.test("")
+    tester.test_functions("")
     # Test single word.
-    tester.test("word")
+    tester.test_functions("word")
     # Test blank.
-    tester.test("     ")
+    tester.test_functions("     ")
 
 
 # ------------------------------------------------------------

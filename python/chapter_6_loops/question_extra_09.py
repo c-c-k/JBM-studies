@@ -31,7 +31,7 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_extra_09]
     # Test.
-    tester.test()
+    tester.test_functions()
 
 
 # ------------------------------------------------------------

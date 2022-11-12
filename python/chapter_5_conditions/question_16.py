@@ -27,13 +27,13 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_16]
     # Test years > 5 , claims <= 10
-    tester.test(6, 9, 1000)
+    tester.test_functions(6, 9, 1000)
     # Test years > 5 , claims > 10
-    tester.test(6, 19, 1000)
+    tester.test_functions(6, 19, 1000)
     # Test years < 5 , claims <= 10
-    tester.test(3, 9, 1000)
+    tester.test_functions(3, 9, 1000)
     # Test years < 5 , claims > 10
-    tester.test(3, 19, 1000)
+    tester.test_functions(3, 19, 1000)
 
 
 # ------------------------------------------------------------

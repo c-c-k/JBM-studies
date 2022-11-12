@@ -22,9 +22,9 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_06]
     # Test odd number.
-    tester.test(1)
+    tester.test_functions(1)
     # Test even number.
-    tester.test(0)
+    tester.test_functions(0)
 
 
 

@@ -59,18 +59,18 @@ def quicktest_answers():
     def test_quadratic(a, b, c, d):
         """Test quadratic equation solver with parameters generated from factorial cases."""
         parameters, solutions = quadratic_from_factorial(a, b, c, d)
-        tester.test(" ".join(str(param) for param in parameters))
+        tester.test_functions(" ".join(str(param) for param in parameters))
         print("The solutions should be:", *solutions)
 
     # Run valid quadratic tests with the help of test_quadratic.
     test_quadratic(2, 5, 1, 3)
     test_quadratic(4, 1, 3, 9)
     # Run test for linear parameters.
-    tester.test("0 -5 10")
+    tester.test_functions("0 -5 10")
     # Run test for a, b and c being zero.
-    tester.test("0 0 0")
+    tester.test_functions("0 0 0")
     # Run test for a and b being zero and c being non-zero.
-    tester.test("0 0 1")
+    tester.test_functions("0 0 1")
 
 
 # ------------------------------------------------------------

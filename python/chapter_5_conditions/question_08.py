@@ -28,11 +28,11 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_08]
     # Test team A win.
-    tester.test(1, 0)
+    tester.test_functions(1, 0)
     # Test team B win.
-    tester.test(0, 1)
+    tester.test_functions(0, 1)
     # Test draw.
-    tester.test(0, 0)
+    tester.test_functions(0, 0)
 
 
 # ------------------------------------------------------------

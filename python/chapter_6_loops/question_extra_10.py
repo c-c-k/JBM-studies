@@ -47,17 +47,17 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_extra_09]
     # Test valid address.
-    tester.test("user@host")
+    tester.test_functions("user@host")
     # Test all mistakes.
-    tester.test("@user @@host@")
+    tester.test_functions("@user @@host@")
     # Test multiple @ signs.
-    tester.test("user@@host")
+    tester.test_functions("user@@host")
     # Test @ sign at start and no valid @ sign.
-    tester.test("@userhost")
+    tester.test_functions("@userhost")
     # Test @ sign at end and no valid @ sign.
-    tester.test("userhost@")
+    tester.test_functions("userhost@")
     # Test spaces.
-    tester.test("user @ host")
+    tester.test_functions("user @ host")
 
 
 # ------------------------------------------------------------

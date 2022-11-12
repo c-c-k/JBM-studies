@@ -32,11 +32,11 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_extra_06]
     # Test no Z full name.
-    tester.test("FirstName", "LastName")
+    tester.test_functions("FirstName", "LastName")
     # Test Z first name.
-    tester.test("FirstZName", "LastName")
+    tester.test_functions("FirstZName", "LastName")
     # Test Z last name.
-    tester.test("FirstZName", "LastZName")
+    tester.test_functions("FirstZName", "LastZName")
 
 
 # ------------------------------------------------------------

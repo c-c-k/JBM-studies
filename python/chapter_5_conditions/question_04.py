@@ -33,9 +33,9 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_04]
     # Test real man
-    tester.test("FirstName", "LastName", "Y")
+    tester.test_functions("FirstName", "LastName", "Y")
     # Test lumberjack
-    tester.test("FirstName", "LastName", "You misogynist pigs.")
+    tester.test_functions("FirstName", "LastName", "You misogynist pigs.")
 
 
 # ------------------------------------------------------------

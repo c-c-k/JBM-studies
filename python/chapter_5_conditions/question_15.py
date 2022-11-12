@@ -24,13 +24,13 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_15]
     # Test two digit positive.
-    tester.test(42)
+    tester.test_functions(42)
     # Test two digit negative.
-    tester.test(-23)
+    tester.test_functions(-23)
     # Test single digit.
-    tester.test(-2)
+    tester.test_functions(-2)
     # Test 3+ digits.
-    tester.test(123)
+    tester.test_functions(123)
 
 
 # ------------------------------------------------------------

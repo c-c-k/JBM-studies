@@ -41,7 +41,7 @@ def quicktest_answers():
     # Test standard deviation for random population.
     random.seed()
     population = [random.randint(0, 100) for _ in range(10)]
-    tester.test(*population)
+    tester.test_functions(*population)
     print("!! The answer should be:", pstdev(population))
 
 

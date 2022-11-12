@@ -28,11 +28,11 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_07]
     # Test positive number.
-    tester.test(1)
+    tester.test_functions(1)
     # Test zero.
-    tester.test(0)
+    tester.test_functions(0)
     # Test negative number.
-    tester.test(-1)
+    tester.test_functions(-1)
 
 
 # ------------------------------------------------------------

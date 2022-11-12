@@ -24,15 +24,15 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_14]
     # Test zero.
-    tester.test(0)
+    tester.test_functions(0)
     # Test one.
-    tester.test(1)
+    tester.test_functions(1)
     # Test proper fraction.
-    tester.test(0.2)
+    tester.test_functions(0.2)
     # Test non-proper fraction bigger than 1.
-    tester.test(2)
+    tester.test_functions(2)
     # Test non-proper fraction smaller than 0.
-    tester.test(-1)
+    tester.test_functions(-1)
 
 
 # ------------------------------------------------------------

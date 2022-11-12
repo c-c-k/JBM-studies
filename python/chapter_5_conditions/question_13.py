@@ -24,15 +24,15 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_13]
     # Test even positive.
-    tester.test(2)
+    tester.test_functions(2)
     # Test even non-positive.
-    tester.test(-2)
+    tester.test_functions(-2)
     # Test zero.
-    tester.test(0)
+    tester.test_functions(0)
     # Test odd positive.
-    tester.test(1)
+    tester.test_functions(1)
     # Test odd non-positive.
-    tester.test(-1)
+    tester.test_functions(-1)
 
 
 # ------------------------------------------------------------

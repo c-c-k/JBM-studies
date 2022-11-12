@@ -42,11 +42,11 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_03]
     # Test bad operator
-    tester.test(1, 1, 0)
+    tester.test_functions(1, 1, 0)
     # Test addition operator
-    tester.test(1, 1, 1)
+    tester.test_functions(1, 1, 1)
     # Test subtraction operator
-    tester.test(1, 1, 2)
+    tester.test_functions(1, 1, 2)
 
 
 # ------------------------------------------------------------

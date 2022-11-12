@@ -27,13 +27,13 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_02]
     # Test positive float
-    tester.test(1.1)
+    tester.test_functions(1.1)
     # Test positive integer
-    tester.test(1)
+    tester.test_functions(1)
     # Test zero
-    tester.test(0)
+    tester.test_functions(0)
     # Test negative number
-    tester.test(-1)
+    tester.test_functions(-1)
 
 
 # ------------------------------------------------------------

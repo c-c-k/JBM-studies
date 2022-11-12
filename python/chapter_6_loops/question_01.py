@@ -23,7 +23,7 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_01]
     # Test trivial sum.
-    tester.test(*(1 for _ in range(10)))
+    tester.test_functions(*(1 for _ in range(10)))
 
 
 # ------------------------------------------------------------

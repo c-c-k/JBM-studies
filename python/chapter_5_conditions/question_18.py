@@ -45,15 +45,15 @@ def quicktest_answers():
     tester.functions = [answer_18]
     tester.suppressed_exceptions = (ValueError,)
     # Test wrong input
-    tester.test("2k")
-    tester.test(-5000)
-    tester.test(2200)
+    tester.test_functions("2k")
+    tester.test_functions(-5000)
+    tester.test_functions(2200)
     # Test leap years
     for year in (0, 2000, -16):
-        tester.test(year)
+        tester.test_functions(year)
     # Test non-leap years
     for year in (1, 1000, -1500):
-        tester.test(year)
+        tester.test_functions(year)
 
 
 class TestAnswer(test_answer.TestAnswer):

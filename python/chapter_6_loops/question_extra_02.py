@@ -23,7 +23,7 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_extra_02]
     # Test.
-    tester.test()
+    tester.test_functions()
 
 
 # ------------------------------------------------------------

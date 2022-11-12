@@ -29,7 +29,7 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_03]
     # Test trivial population.
-    tester.test(*range(1, 6), *range(-5, 1))
+    tester.test_functions(*range(1, 6), *range(-5, 1))
 
 
 # ------------------------------------------------------------

@@ -45,13 +45,13 @@ def quicktest_answers():
     tester = QuickTest()
     tester.functions = [answer_09, answer_09_v2]
     # Test assignments: V, score: V
-    tester.test(1, 60)
+    tester.test_functions(1, 60)
     # Test assignments: V, score: X
-    tester.test(1, 59)
+    tester.test_functions(1, 59)
     # Test assignments: X, score: V
-    tester.test(0, 60)
+    tester.test_functions(0, 60)
     # Test assignments: X, score: X
-    tester.test(0, 59)
+    tester.test_functions(0, 59)
 
 
 # ------------------------------------------------------------
