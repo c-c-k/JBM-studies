@@ -6,8 +6,8 @@
 # ------------------------------------------------------------
 # IMPORTS
 # ------------------------------------------------------------
-from python.tests import test_answer
-
+from python.jbm_helper import test_answer
+from python.jbm_helper.quick_test import QuickTest
 
 # ------------------------------------------------------------
 # MESSAGES
@@ -24,10 +24,8 @@ MSG_LEAP_YEAR = "Year {YEAR} is a leap year."
 MSG_NON_LEAP_YEAR = "Year {YEAR} is a normal year."
 
 
-# ------------------------------------------------------------
-# FUNCTIONS
-# ------------------------------------------------------------
-def main():
+def answer_18():
+    # -=- ANSWER START -=-
     try:
         year = int(input(MSG_REQ_INPUT))
     except ValueError:
@@ -40,9 +38,24 @@ def main():
         print(MSG_LEAP_YEAR.format(YEAR=year))
 
 
-# ------------------------------------------------------------
-# TEST
-# ------------------------------------------------------------
+# -=- ANSWER END -=-
+# -=- TEST START -=-
+def quicktest_answers():
+    tester = QuickTest()
+    tester.functions = [answer_18]
+    tester.suppressed_exceptions = (ValueError,)
+    # Test wrong input
+    tester.test("2k")
+    tester.test(-5000)
+    tester.test(2200)
+    # Test leap years
+    for year in (0, 2000, -16):
+        tester.test(year)
+    # Test non-leap years
+    for year in (1, 1000, -1500):
+        tester.test(year)
+
+
 class TestAnswer(test_answer.TestAnswer):
     LEAP_YEARS = ("0", "2000", "-16")
     NON_LEAP_YEARS = ("1", "1000", "-1500")
@@ -52,7 +65,7 @@ class TestAnswer(test_answer.TestAnswer):
         self.assertRaisesRegex(
             ValueError,
             self.lazy_exception_re(MSG_ERROR_NON_INT_YEAR),
-            main,
+            answer_18,
             # msg="Accepted year with illegal characters."
         )
 
@@ -61,7 +74,7 @@ class TestAnswer(test_answer.TestAnswer):
         self.assertRaisesRegex(
             ValueError,
             self.lazy_exception_re(MSG_ERROR_OUT_OF_CONTEXT_YEAR),
-            main,
+            answer_18,
             # msg="Accepted pre civilization year."
         )
 
@@ -70,7 +83,7 @@ class TestAnswer(test_answer.TestAnswer):
         self.assertRaisesRegex(
             ValueError,
             self.lazy_exception_re(MSG_ERROR_OUT_OF_CONTEXT_YEAR),
-            main,
+            answer_18,
             # msg="Accepted post singularity year."
         )
 
@@ -79,7 +92,7 @@ class TestAnswer(test_answer.TestAnswer):
             with self.subTest("Leap year reported as non leap", year=year):
                 self.set_stdin(year)
                 self.reset_std_out()
-                main()
+                answer_18()
                 output = self.test_stdout.getvalue()
                 self.expected_output = (MSG_REQ_INPUT
                                         + MSG_LEAP_YEAR.format(YEAR=year)
@@ -91,7 +104,7 @@ class TestAnswer(test_answer.TestAnswer):
             with self.subTest("Non leap year reported as leap", year=year):
                 self.set_stdin(year)
                 self.reset_std_out()
-                main()
+                answer_18()
                 output = self.test_stdout.getvalue()
                 self.expected_output = (MSG_REQ_INPUT
                                         + MSG_NON_LEAP_YEAR.format(YEAR=year)
@@ -100,8 +113,17 @@ class TestAnswer(test_answer.TestAnswer):
 
 
 # ------------------------------------------------------------
+# --UNUSED
+# ------------------------------------------------------------
+def main():
+    pass
+
+
+# ------------------------------------------------------------
 # PROGRAM CODE
 # ------------------------------------------------------------
 if __name__ == "__main__":
-    test_answer.unittest.main()
+    quicktest_answers()
+    # test_answer.unittest.main()
     # main()
+# -=- TEST END -=-
