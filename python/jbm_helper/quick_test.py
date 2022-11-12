@@ -29,9 +29,10 @@ class QuickTest:
 
     def test_inputs_for_function(self, function: typing.Callable, *inputs):
         has_data = bool(self.mode)
+        inputs = (str(input_) + "\n" for input_ in inputs)
 
         def stdin_readline_override() -> str:
-            next_input = next((str(input_) + "\n" for input_ in inputs))
+            next_input = next(inputs)
             print(next_input, end="")
             return next_input
 
