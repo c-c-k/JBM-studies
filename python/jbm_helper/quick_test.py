@@ -28,6 +28,7 @@ class QuickTest:
                 self.test_inputs_for_function(function, *args)
 
     def test_inputs_for_function(self, function: typing.Callable, *inputs):
+        print(f"== testing function {function.__name__} with inputs: {inputs} ==")
         has_data = bool(self.mode)
         inputs = (str(input_) + "\n" for input_ in inputs)
 
