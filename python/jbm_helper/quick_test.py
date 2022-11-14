@@ -33,6 +33,7 @@ class QuickTest:
             args: tuple | None = None,
             kwargs: dict | None = None,
             suppressed_exceptions: tuple | None = None,
+            print_return: bool = False,
     ):
         if not self.functions:
             return
@@ -40,18 +41,22 @@ class QuickTest:
         self.sysargv = sysargv if sysargv else None
         self.args = args if args else tuple()
         self.kwargs = kwargs if kwargs else dict()
-        self.suppressed_exceptions = suppressed_exceptions
+        self.suppressed_exceptions = (
+            suppressed_exceptions if suppressed_exceptions else tuple())
         for function in self.functions:
-            self._test_function(function)
+            self._test_function(function=function, print_return=print_return)
 
-    def _test_function(self, function: typing.Callable):
+    def _test_function(self, function: typing.Callable, print_return: bool):
         self._print_test_info_message(function)
         self._override_sysargv()
         self._override_stdin()
         try:
-            function(*self.args, **self.kwargs)
+            return_val = function(*self.args, **self.kwargs)
         except Exception as error:
             self._handle_suppress_exceptions(error)
+        else:
+            if print_return:
+                print("== returned:", return_val)
         self._restore_stdin()
         self._restore_sysargv()
 
