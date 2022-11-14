@@ -9,7 +9,7 @@
 from python.jbm_helper.quick_test import QuickTest
 
 
-def answer_extra_09():
+def answer_extra_10():
     # -=- ANSWER START -=-
     email_address = input("Please enter an email address for format validation: ")
     valid_address = True
@@ -45,7 +45,7 @@ def answer_extra_09():
 # -=- TEST START -=-
 def quicktest_answers():
     tester = QuickTest()
-    tester.functions = [answer_extra_09]
+    tester.functions = [answer_extra_10]
     # Test valid address.
     tester.test_functions("user@host")
     # Test all mistakes.
