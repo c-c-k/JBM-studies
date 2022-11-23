@@ -7,42 +7,52 @@
 # IMPORTS
 # ------------------------------------------------------------
 # -=- ANSWER START -=-
-CUT_STR_TO_INT = {
-    "ideal": 5,
-    "premium": 4,
-    "very_good": 3,
-    "good": 2,
-    "fair": 1,
-    "unknown": 0,
-}
-CLARITY_STR_TO_INT = {
-    "fl": 11,
-    "if": 10,
-    "vvs1": 9,
-    "vvs2": 8,
-    "vs1": 7,
-    "vs2": 6,
-    "si1": 5,
-    "si2": 4,
-    "i1": 3,
-    "i2": 2,
-    "i3": 1,
-    "unknown": 0,
-}
 
 BasicValue = int | float
 GradedValue = int | str
 
 
+# ===== Diamond Class START =====
 class Diamond:
+    """
+    This class represents a single diamond.
+
+    For purposes on comparison, the cut and clarity ratings 
+    follow the official ratings:
+        cut:
+            ideal > premium > very_good > good > fair
+        clarity:
+            fl > if > vvs1 > vvs2 > vs1 > vs2 > si1 > si2 > i1 > i2 > i3
+    """
+
+    # The following are helper dictionaries for the purpose of comparing
+    # diamond according to their cut or clarity.
     cut_str_to_int: dict = {
-        grade_name: grade_id for grade_name, grade_id in CUT_STR_TO_INT.items()}
+        "ideal": 5,
+        "premium": 4,
+        "very_good": 3,
+        "good": 2,
+        "fair": 1,
+        "unknown": 0,
+    }
     cut_int_to_str: dict = {
-        grade_id: grade_name for grade_name, grade_id in CUT_STR_TO_INT.items()}
+        grade_id: grade_name for grade_name, grade_id in cut_str_to_int.items()}
     clarity_str_to_int: dict = {
-        grade_name: grade_id for grade_name, grade_id in CLARITY_STR_TO_INT.items()}
+        "fl": 11,
+        "if": 10,
+        "vvs1": 9,
+        "vvs2": 8,
+        "vs1": 7,
+        "vs2": 6,
+        "si1": 5,
+        "si2": 4,
+        "i1": 3,
+        "i2": 2,
+        "i3": 1,
+        "unknown": 0,
+    }
     clarity_int_to_str: dict = {
-        grade_id: grade_name for grade_name, grade_id in CLARITY_STR_TO_INT.items()}
+        grade_id: grade_name for grade_name, grade_id in clarity_str_to_int.items()}
     _graded_values: dict = {
         "cut": {
             "str_to_int": cut_str_to_int,
@@ -53,6 +63,8 @@ class Diamond:
             "int_to_str": clarity_int_to_str
         }
     }
+
+    # -- Internal attributes --
     _carat: float = None
     _cut: int = None
     _color: str = None
@@ -64,12 +76,26 @@ class Diamond:
     _y: float = None
     _z: float = None
 
+    # -- Class Initializer --
     def __init__(
             self, carat: float = 0.0, cut: str = "",
             color: str = "", clarity: str = "", depth: float = 0.0,
             table: float = 0.0, price: float = 0.0,
             x: float = 0.0, y: float = 0.0, z: float = 0.0,
     ):
+        """
+
+        :param carat: The diamonds carat value.
+        :param cut: The diamonds cut rating.
+        :param color: The diamonds color classification.
+        :param clarity: The diamonds clarity rating.
+        :param depth: The diamonds depth.
+        :param table: The diamonds table rating.
+        :param price: The diamonds market price.
+        :param x: The diamonds length.
+        :param y: The diamonds width.
+        :param z: The diamonds height.
+        """
         self.carat = carat
         self.cut = cut
         self.color = color
@@ -80,13 +106,15 @@ class Diamond:
         self.x = x
         self.y = y
         self.z = z
-        
+
+    # -- Magic methods overrides --
     def __str__(self):
         return (f"carat: {self.carat}, cut: {self.cut}, color: {self.color},"
                 f" clarity: {self.clarity}, depth: {self.depth},"
                 f" table: {self.table}, price: {self.price},"
                 f" x: {self.x}, y: {self.y}, z: {self.z},")
 
+    # -- Class private generic getters/setters --
     def _set_basic_value(self, field_name: str, value: BasicValue):
         self.__setattr__("_" + field_name, value)
 
@@ -110,6 +138,7 @@ class Diamond:
         grade = self.__getattribute__("_" + field_name)
         return grade_map[grade]
 
+    # -- Class public generic getters/setters --
     def get(self, field_name: str):
         if field_name in self._graded_values:
             return self._get_graded_value(
@@ -129,6 +158,7 @@ class Diamond:
         else:
             self._set_basic_value(field_name, value)
 
+    # -- Class attribute encapsulation --
     @property
     def carat(self):
         return self.get("carat")
@@ -208,6 +238,8 @@ class Diamond:
     @z.setter
     def z(self, value):
         self.set("z", value)
+
+    # ===== Diamond Class END =====
 
 
 class DiamondList:
