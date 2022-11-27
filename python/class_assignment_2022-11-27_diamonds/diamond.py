@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""This is the "Diamond" class's module.
+"""This module contains the 'Diamond' class and it's supplements.
 
+Classes:
+    * Diamond - This class represents a single diamond.
+    * BaseGrade - A base class for graded values (string values that
+                    represent sortable grades.)
+    * CutGrade - A BaseGrade derivative for diamond cut grades.
+    * ClarityGrade - A BaseGrade derivative for diamond clarity grades.
+Types:
+    * TypeGradedValue: A convenience type for the possible input values
+                        for the BaseGrade initializer.
 """
 
 
@@ -14,6 +23,8 @@
 # ------------------------------------------------------------
 # ==TYPES==
 # ------------------------------------------------------------
+#  A convenience type for the possible input values
+#  for the BaseGrade initializer.
 TypeGradedValue = int | str
 
 
@@ -26,20 +37,68 @@ TypeGradedValue = int | str
 # ==CLASSES==
 # ------------------------------------------------------------
 class BaseGrade:
+    """A base class for graded values.
+    The purpose of this class is to allow sorting for string diamond
+    attributes that represent diamond qualities that have
+    a clear grade ladder.
+
+    attributes:
+        * name_to_id: A dictionary mapping the string names of the grades
+                        as they appear in the source dataset to integer id's
+                        that would allow convenient sorting.
+                        This attribute needs to be overriden
+                        with the appropriate mapping in each inheriting class.
+                        NOTE: Make sure the id's mapped to the grade names
+                            match the intended grade ladder.
+        * id_to_name: An inverse mapping of name_to_id meant for returning
+                        the grade names mapped to the grade id's for purposes
+                        of output.
+                        NOTE: each inheritor class should override this
+                        attribute with:
+                            id_to_name = {
+                                grade_id: grade_name for grade_name,
+                                 grade_id in name_to_id.items()}
+                        TODO: Think of a way to do this automatically for
+                                each inheritor without adding a lot of
+                                overhead.
+        * _grade_id: The integer grade id that has been set for a particular
+            instance of an inheritor class.
+    Properties:
+        * grade: Returns the integer grade id of an instance and sets it
+                according to input type.
+    """
     name_to_id: dict[str, int] = {}
     id_to_name: dict[int, str] = {}
     _grade_id: int = None
 
     def __init__(self, grade: TypeGradedValue):
-        # self._name_to_id = self.cl
+        """
+
+        :param grade: The string or integer value according to which
+                        the grade id of the instance is to be set.
+        """
         self.grade = grade
 
     @property
     def grade(self):
+        """
+
+        return: The integer grade id of the instance.
+        """
         return self._grade_id
 
     @grade.setter
     def grade(self, grade: TypeGradedValue):
+        """Set the integer grade id of the instance.
+
+        If the input grade is a str try to convert it to a grade id via
+            the mapping given in self.name_to_id.
+        If the input grade is an int try to set it as the grade id if
+            it represents a valid grade id.
+        :raise ValueError if the grade value is illegal.
+        :param grade: The raw (int id or str name) grade from which the
+                        instances grade id is to be set.
+        """
         if isinstance(grade, int) and (grade in self.id_to_name.keys()):
             self._grade_id = grade
         elif isinstance(grade, str) and (grade in self.name_to_id.keys()):
@@ -79,10 +138,9 @@ class BaseGrade:
 
 
 class CutGrade(BaseGrade):
-    """
+    """A BaseGrade inheritor for diamond cut grades.
 
-    For purposes on comparison, the cut and clarity ratings
-    follow the official ratings:
+    The cut grades follow what seemed to me to be the obvious grade ladder:
         ideal > premium > very_good > good > fair
     """
     name_to_id = {
@@ -97,11 +155,14 @@ class CutGrade(BaseGrade):
 
 
 class ClarityGrade(BaseGrade):
-    """
+    """A BaseGrade inheritor for diamond clarity grades.
 
-    For purposes on comparison, the clarity ratings
-    follow the official ratings:
+
+    The clarity ratings follow the official ratings taken from
+    'https://www.tiffany.com/engagement/
+        the-tiffany-guide-to-diamonds/clarity/':
         fl > if > vvs1 > vvs2 > vs1 > vs2 > si1 > si2 > i1 > i2 > i3
+
     """
     name_to_id = {
         "FL": 11,
@@ -121,8 +182,7 @@ class ClarityGrade(BaseGrade):
 
 
 class Diamond:
-    """
-    This class represents a single diamond.
+    """ This class represents a single diamond.
 
     """
     def __init__(
