@@ -162,50 +162,6 @@ class Diamond:
                 f" table: {self.table}, price: {self.price},"
                 f" x: {self.x}, y: {self.y}, z: {self.z},")
 
-    # -- Class private generic getters/setters --
-    def _set_basic_value(self, field_name: str, value: BasicValue):
-        self.__setattr__("_" + field_name, value)
-
-    def _get_basic_value(self, field_name: str):
-        return self.__getattribute__("_" + field_name)
-
-    def _set_graded_value(self, field_name: str, grade: GradedValue, grade_map: dict):
-        if isinstance(grade, str):
-            try:
-                grade = grade_map[grade.lower()]
-            except KeyError:
-                grade = 0
-        elif isinstance(grade, int):
-            if grade not in grade_map.values():
-                grade = 0
-        else:
-            grade = 0
-        self.__setattr__("_" + field_name, grade)
-
-    def _get_graded_value(self, field_name: str, grade_map: dict):
-        grade = self.__getattribute__("_" + field_name)
-        return grade_map[grade]
-
-    # -- Class public generic getters/setters -- assignment
-    def get(self, field_name: str):
-        if field_name in self._graded_values:
-            return self._get_graded_value(
-                field_name,
-                self._graded_values[field_name]["int_to_str"]
-            )
-        else:
-            return self._get_basic_value(field_name)
-
-    def set(self, field_name: str, value: BasicValue | GradedValue):
-        if field_name in self._graded_values:
-            self._set_graded_value(
-                field_name,
-                value,
-                self._graded_values[field_name]["str_to_int"]
-            )
-        else:
-            self._set_basic_value(field_name, value)
-
 
 # ------------------------------------------------------------
 # ==FUNCTIONS==
