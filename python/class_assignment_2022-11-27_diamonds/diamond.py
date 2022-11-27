@@ -46,7 +46,7 @@ class GradedValue:
         elif isinstance(grade, str) and (grade in self.name_to_id.keys()):
             self._grade_id = self.name_to_id[grade]
         else:
-            raise ValueError(f"Wrong graded value for class: {self.__class__}")
+            raise ValueError(f"Wrong graded value: '{grade}' for class: {self.__class__}")
 
     def __repr__(self):
         return f"class: {self.__class__}, _grade_id: {self._grade_id}"
@@ -86,11 +86,11 @@ class GradedValueCut(GradedValue):
         ideal > premium > very_good > good > fair
     """
     name_to_id = {
-        "ideal": 5,
-        "premium": 4,
-        "very_good": 3,
-        "good": 2,
-        "fair": 1,
+        "Ideal": 5,
+        "Premium": 4,
+        "Very Good": 3,
+        "Good": 2,
+        "Fair": 1,
     }
     id_to_name = {
         grade_id: grade_name for grade_name, grade_id in name_to_id.items()}
@@ -104,17 +104,17 @@ class GradedValueClarity(GradedValue):
         fl > if > vvs1 > vvs2 > vs1 > vs2 > si1 > si2 > i1 > i2 > i3
     """
     name_to_id = {
-        "fl": 11,
-        "if": 10,
-        "vvs1": 9,
-        "vvs2": 8,
-        "vs1": 7,
-        "vs2": 6,
-        "si1": 5,
-        "si2": 4,
-        "i1": 3,
-        "i2": 2,
-        "i3": 1,
+        "FL": 11,
+        "IF": 10,
+        "VVS1": 9,
+        "VVS2": 8,
+        "VS1": 7,
+        "VS2": 6,
+        "SI1": 5,
+        "SI2": 4,
+        "I1": 3,
+        "I2": 2,
+        "I3": 1,
     }
     id_to_name = {
         grade_id: grade_name for grade_name, grade_id in name_to_id.items()}
@@ -144,16 +144,16 @@ class Diamond:
         :param y: The diamonds width.
         :param z: The diamonds height.
         """
-        self.carat = carat
+        self.carat = float(carat)
         self.cut = GradedValueCut(cut)
         self.color = color
         self.clarity = GradedValueClarity(clarity)
-        self.depth = depth
-        self.table = table
-        self.price = price
-        self.x = x
-        self.y = y
-        self.z = z
+        self.depth = float(depth)
+        self.table = float(table)
+        self.price = int(price)
+        self.x = float(x)
+        self.y = float(y)
+        self.z = float(z)
 
     # -- Magic methods overrides --
     def __str__(self):

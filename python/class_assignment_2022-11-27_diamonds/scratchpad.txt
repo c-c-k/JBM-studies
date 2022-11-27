@@ -43,3 +43,28 @@
         else:
             self._set_basic_value(field_name, value)
 === END: discarded Diamond class getters/setters ===
+=== START: discarded DiamondList class methods ===
+    def remove_carat(self, carat: float):
+        new_diamond_list = list()
+        while self.__diamond_list:
+            diamond = self.__diamond_list.pop()
+            if diamond.carat != carat:
+                new_diamond_list.append(diamond)
+
+    def __get_highest(self, field_name) -> "DiamondList":
+        diamond_iter = self.get_all()
+        diamond = next(diamond_iter)
+        highest_list = [diamond]
+        max_val = diamond.get(field_name)
+        for diamond in diamond_iter:
+            val = diamond.get(field_name)
+            if val == max_val:
+                highest_list.append(diamond)
+            elif val > max_val:
+                max_val = val
+                highest_list = [diamond]
+        return DiamondList(highest_list)
+
+    def get_highest_carat(self) -> "DiamondList":
+        return self.__get_highest("carat")
+=== END: discarded DiamondList class methods ===
