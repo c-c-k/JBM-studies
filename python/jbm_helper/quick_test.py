@@ -52,6 +52,8 @@ class QuickTest:
         self._override_stdin()
         try:
             return_val = function(*self.args, **self.kwargs)
+        except StopIteration:
+            print("\n== !!! aborted due to insufficient input !!! ==")
         except Exception as error:
             self._handle_suppress_exceptions(error)
         else:

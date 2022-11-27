@@ -85,7 +85,6 @@ def main():
             continue
         else:
             print(choice)
-            return
 
 
 
