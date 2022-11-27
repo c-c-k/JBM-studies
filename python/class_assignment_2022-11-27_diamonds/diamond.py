@@ -107,6 +107,9 @@ class BaseGrade:
             raise ValueError(f"Wrong graded value: '{grade}' for: '"
                              f"{self.__class__.__name__}")
 
+    def __copy__(self):
+        return self.__class__(self._grade_id)
+
     def __repr__(self):
         return f"class: {self.__class__}, _grade_id: {self._grade_id}"
 
@@ -184,7 +187,14 @@ class ClarityGrade(BaseGrade):
 class Diamond:
     """ This class represents a single diamond.
 
+    All the diamond's slot attributes correspond to the field names(and
+    meanings) in the diamonds' dataset.
     """
+    __slots__ = [
+        "carat", "cut", "color", "clarity",
+        "depth", "table", "price", "x", "y", "z"
+    ]
+
     def __init__(
             self, carat: float = 0.0, cut: TypeGradedValue = "",
             color: str = "", clarity: TypeGradedValue = "", depth: float = 0.0,
@@ -215,12 +225,14 @@ class Diamond:
         self.y = float(y)
         self.z = float(z)
 
-    # -- Magic methods overrides --
     def __str__(self):
         return (f"carat: {self.carat}, cut: {self.cut}, color: {self.color},"
                 f" clarity: {self.clarity}, depth: {self.depth},"
                 f" table: {self.table}, price: {self.price},"
                 f" x: {self.x}, y: {self.y}, z: {self.z},")
+
+    def __copy__(self):
+        return self.__class__(*self.__slots__)
 
 
 # ------------------------------------------------------------
