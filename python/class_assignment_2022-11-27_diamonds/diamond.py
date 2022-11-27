@@ -14,8 +14,7 @@
 # ------------------------------------------------------------
 # ==TYPES==
 # ------------------------------------------------------------
-BasicValue = int | float
-TypeGraded = int | str
+TypeGradedValue = int | str
 
 
 # ------------------------------------------------------------
@@ -26,12 +25,12 @@ TypeGraded = int | str
 # ------------------------------------------------------------
 # ==CLASSES==
 # ------------------------------------------------------------
-class GradedValue:
+class BaseGrade:
     name_to_id: dict[str, int] = {}
     id_to_name: dict[int, str] = {}
     _grade_id: int = None
 
-    def __init__(self, grade: TypeGraded):
+    def __init__(self, grade: TypeGradedValue):
         # self._name_to_id = self.cl
         self.grade = grade
 
@@ -40,13 +39,14 @@ class GradedValue:
         return self._grade_id
 
     @grade.setter
-    def grade(self, grade: TypeGraded):
+    def grade(self, grade: TypeGradedValue):
         if isinstance(grade, int) and (grade in self.id_to_name.keys()):
             self._grade_id = grade
         elif isinstance(grade, str) and (grade in self.name_to_id.keys()):
             self._grade_id = self.name_to_id[grade]
         else:
-            raise ValueError(f"Wrong graded value: '{grade}' for class: {self.__class__}")
+            raise ValueError(f"Wrong graded value: '{grade}' for: '"
+                             f"{self.__class__.__name__}")
 
     def __repr__(self):
         return f"class: {self.__class__}, _grade_id: {self._grade_id}"
@@ -78,7 +78,7 @@ class GradedValue:
             return self.grade < other.grade
 
 
-class GradedValueCut(GradedValue):
+class CutGrade(BaseGrade):
     """
 
     For purposes on comparison, the cut and clarity ratings
@@ -96,7 +96,7 @@ class GradedValueCut(GradedValue):
         grade_id: grade_name for grade_name, grade_id in name_to_id.items()}
 
 
-class GradedValueClarity(GradedValue):
+class ClarityGrade(BaseGrade):
     """
 
     For purposes on comparison, the clarity ratings
@@ -126,8 +126,8 @@ class Diamond:
 
     """
     def __init__(
-            self, carat: float = 0.0, cut: TypeGraded = "",
-            color: str = "", clarity: TypeGraded = "", depth: float = 0.0,
+            self, carat: float = 0.0, cut: TypeGradedValue = "",
+            color: str = "", clarity: TypeGradedValue = "", depth: float = 0.0,
             table: float = 0.0, price: float = 0.0,
             x: float = 0.0, y: float = 0.0, z: float = 0.0,
     ):
@@ -145,9 +145,9 @@ class Diamond:
         :param z: The diamonds height.
         """
         self.carat = float(carat)
-        self.cut = GradedValueCut(cut)
+        self.cut = CutGrade(cut)
         self.color = color
-        self.clarity = GradedValueClarity(clarity)
+        self.clarity = ClarityGrade(clarity)
         self.depth = float(depth)
         self.table = float(table)
         self.price = int(price)

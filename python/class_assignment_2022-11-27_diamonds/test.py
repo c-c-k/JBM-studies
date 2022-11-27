@@ -15,11 +15,11 @@ import csv
 
 def test_diamond_graded_values():
     print("--clarity and cut grade tests::")
-    low_clarity = diamond.GradedValueClarity("i3")
-    high_clarity = diamond.GradedValueClarity("if")
+    low_clarity = diamond.ClarityGrade("i3")
+    high_clarity = diamond.ClarityGrade("if")
     print(f"{str(low_clarity)} < {str(high_clarity)}: ", low_clarity < high_clarity)
-    low_cut = diamond.GradedValueCut("fair")
-    high_cut = diamond.GradedValueCut("ideal")
+    low_cut = diamond.CutGrade("fair")
+    high_cut = diamond.CutGrade("ideal")
     print(f"{str(low_cut)} > {str(high_cut)}: ", low_cut > high_cut)
 
 
