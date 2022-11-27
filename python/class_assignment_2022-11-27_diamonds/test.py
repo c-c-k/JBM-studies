@@ -29,7 +29,7 @@ def diamond_list_load():
         diamond_list = DiamondList()
         for diamond_ in diamonds:
             diamond_list.add(diamond_)
-        print(*diamond_list.get_all(), sep="\n")
+        print(*diamond_list.get_iter(), sep="\n")
 
 
 def test_ui_diamonds_list_load():

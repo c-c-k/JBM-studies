@@ -9,14 +9,12 @@
 # ==IMPORTS==
 # ------------------------------------------------------------
 # --LOCAL IMPORTS--
-from diamond import Diamond
+from diamond import Diamond, CutGrade, ClarityGrade
 
 
 # ------------------------------------------------------------
 # ==TYPES==
 # ------------------------------------------------------------
-BasicValue = int | float
-GradedValue = int | str
 
 
 # ------------------------------------------------------------
@@ -37,8 +35,17 @@ class DiamondList:
                                  f"{diamond} \n {error.args[0]}")
         self.__diamond_list.append(diamond)
 
-    def get_all(self):
+    def get_iter(self):
         return iter(self.__diamond_list)
+
+    def get_list(self):
+        return iter(self.__diamond_list)
+
+    def len(self):
+        return len(self.__diamond_list)
+
+
+
 
 
 # ------------------------------------------------------------
