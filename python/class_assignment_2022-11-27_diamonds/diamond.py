@@ -119,6 +119,9 @@ class BaseGrade:
         else:
             return "Undefined"
 
+    def __hash__(self):
+        return self._grade_id
+
     def __eq__(self, other):
         if self.__class__ is other.__class__:
             return self.grade == other.grade

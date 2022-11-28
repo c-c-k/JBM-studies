@@ -1,0 +1,264 @@
+--clarity and cut grade tests::
+I3 < IF:  True
+Fair > Ideal:  False
+carat: 0.23, cut: Ideal, color: E, clarity: SI2, depth: 61.5, table: 55.0, price: 326, x: 3.95, y: 3.98, z: 2.43,
+carat: 0.21, cut: Premium, color: E, clarity: SI1, depth: 59.8, table: 61.0, price: 326, x: 3.89, y: 3.84, z: 2.31,
+carat: 0.23, cut: Good, color: E, clarity: VS1, depth: 56.9, table: 65.0, price: 327, x: 4.05, y: 4.07, z: 2.31,
+carat: 0.29, cut: Premium, color: I, clarity: VS2, depth: 62.4, table: 58.0, price: 334, x: 4.2, y: 4.23, z: 2.63,
+carat: 0.31, cut: Good, color: J, clarity: SI2, depth: 63.3, table: 58.0, price: 335, x: 4.34, y: 4.35, z: 2.75,
+carat: 0.24, cut: Very Good, color: J, clarity: VVS2, depth: 62.8, table: 57.0, price: 336, x: 3.94, y: 3.96, z: 2.48,
+carat: 0.24, cut: Very Good, color: I, clarity: VVS1, depth: 62.3, table: 57.0, price: 336, x: 3.95, y: 3.98, z: 2.47,
+carat: 0.26, cut: Very Good, color: H, clarity: SI1, depth: 61.9, table: 55.0, price: 337, x: 4.07, y: 4.11, z: 2.53,
+carat: 0.22, cut: Fair, color: E, clarity: VS2, depth: 65.1, table: 61.0, price: 337, x: 3.87, y: 3.78, z: 2.49,
+== testing function load_diamond_list; ==
+== returned: <diamond_list.DiamondList object at 0x7f2073999000>
+== testing function print_menu; ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+== returned: None
+== testing function init_id_to_choice_dict; ==
+== returned: {1: <MenuChoice.GET_MAX_PRICE: 1>, 2: <MenuChoice.GET_AVG_PRICE: 2>, 3: <MenuChoice.GET_IDEAL_COUNT: 3>, 4: <MenuChoice.GET_COLORS: 4>, 5: <MenuChoice.GET_PREMIUM_MEDIAN_CARAT: 5>, 6: <MenuChoice.GET_CARAT_AVG_PER_CUT: 6>, 7: <MenuChoice.GET_PRICE_AVG_PER_COLOR: 7>, 0: <MenuChoice.EXIT: 0>}
+== testing function main; inputs: ('string', 0.0, 99999, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: string
+Invalid choice, please try again.
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0.0
+Invalid choice, please try again.
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 99999
+Invalid choice, please try again.
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (1, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 1
+The highest priced diamond is:  18823
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (2, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 2
+The average price of a diamond is:  3933
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (3, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 3
+The number of Ideal diamonds is:  21551
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (4, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 4
+There are 7 available colors which are:
+I, E, G, J, H, F, D
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (5, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 5
+The median carat for Premium diamonds is:  0.86
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (6, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 6
+The carat averages per cut are:
+Ideal: 0.7
+Premium: 0.89
+Very Good: 0.81
+Good: 0.85
+Fair: 1.05
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+== testing function main; inputs: (7, 0); ==
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 7
+The price averages per color are:
+I: 5092
+E: 3077
+G: 3999
+J: 5324
+H: 4487
+F: 3725
+D: 3170
+Please select action:
+  1: Get the highest diamond price.
+  2: Get the average diamond price.
+  3: Count the total number of ideal diamonds in the catalog.
+  4: List the number and names of the colors available in the catalog
+  5: Get the median carat for premium cut diamonds.
+  6: Get the carat average per diamond cut grade.
+  7: Get the price average per diamond color.
+  0: Exit the diamonds program.
+Input number of menu choice: 0
+Thank you for using the diamonds catalog.
+Have a nice day :)
+== returned: None
+
+Process finished with exit code 0
