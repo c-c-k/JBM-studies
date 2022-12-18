@@ -4,15 +4,6 @@
 """"""
 
 
-# ------------------------------------------------------------
-# IMPORTS
-# ------------------------------------------------------------
-from python.jbm_helper.quick_test import QuickTest
-
-
-# ------------------------------------------------------------
-# ANSWERS
-# ------------------------------------------------------------
 def multiply_by_constant_factory(constant):
     def multiply_by_constant(number):
         return constant * number
@@ -42,8 +33,6 @@ def gr_then_factory(num):
 # TESTS
 # ------------------------------------------------------------
 def quicktest_answers():
-    tester = QuickTest()
-    tester.functions = []
     multiply_by_2 = multiply_by_constant_factory(2)
     print(multiply_by_2(3))
     filter_by_3 = gen_filter_factory(3)
