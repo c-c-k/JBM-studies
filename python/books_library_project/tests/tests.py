@@ -1,16 +1,44 @@
+import csv
+import os
+from pathlib import Path
 import unittest
 
-from book import Book
+from book import Book, Books
 
 SAMPLE_BOOK = {
+    'id': 1,
     'name': 'example_book_name',
     'author': 'example_author_name',
     'year_published': 2000,
+    'loan_type': 1,
 }
 BOOK_LOAN_TYPES = {
     'valid': [1, 2, 3],
     'invalid': [0, 4]
 }
+SAMPLE_BOOKS_DATASET = (
+    {
+        'id': 1,
+        'name': 'example_book_1_name',
+        'author': 'example_author_1_name',
+        'year_published': 2000,
+        'loan_type': 1,
+    },
+    {
+        'id': 2,
+        'name': 'example_book_2_name',
+        'author': 'example_author_1_name',
+        'year_published': 2001,
+        'loan_type': 2,
+    },
+    {
+        'id': 3,
+        'name': 'example_book_3_name',
+        'author': 'example_author_2_name',
+        'year_published': 2002,
+        'loan_type': 3,
+    },
+)
 
 
 class TestBook(unittest.TestCase):
@@ -72,6 +100,15 @@ class TestBook(unittest.TestCase):
 
 
 class TestBooks(unittest.TestCase):
+    def setUp(self) -> None:
+        test_file_path = Path('test_data_set.csv')
+        with open(test_file_path, 'w', newline='') as test_data_set:
+            dict_writer = csv.DictWriter(test_data_set, (
+                'id', 'name', 'author', 'year_published', 'loan_type'
+            ))
+            dict_writer.writeheader()
+
+
 
 
 

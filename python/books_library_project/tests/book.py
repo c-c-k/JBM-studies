@@ -1,3 +1,5 @@
+import csv
+
 
 class Book:
     __next_id = 1
@@ -26,5 +28,8 @@ class Book:
 class Books:
     datasource = ...
 
-
-        
+    @classmethod
+    def __iter__(cls):
+        with open(cls.datasource, 'r', newline='') as csv_data_file:
+            dict_reader = csv.DictReader(csv_data_file)
+            yield from dict_reader
