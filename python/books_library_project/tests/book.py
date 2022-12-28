@@ -17,5 +17,14 @@ class Book:
         self.name = name
         self.author = author
         self.year_published = year_published
-        self.loan_type = loan_type
+        if 0 < loan_type < 4:
+            self.loan_type = loan_type
+        else:
+            raise ValueError('wrong loan type')
+
+
+class Books:
+    datasource = ...
+
+
         
