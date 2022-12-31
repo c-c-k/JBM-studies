@@ -6,9 +6,13 @@ Description
 """
 
 # noinspection PyPep8Naming
-from datetime import datetime as DateTime, date as Date
+import csv
+import dataclasses as dc
+import datetime as dt
+from typing import ClassVar
 
 import settings
+import utils
 
 
 class BaseField:
@@ -26,6 +30,8 @@ class BaseField:
         if hasattr(self, '_postprocess'):
             value = self._postprocess(value)
         setattr(obj, self.private_name, value)
+        if hasattr(obj, '_mark_changed'):
+            obj.__class__._mark_changed()
 
 
 class IntegerField(BaseField):
@@ -35,7 +41,10 @@ class IntegerField(BaseField):
 
     def _validate(self, value):
         if not isinstance(value, int):
-            raise TypeError(f'{value} is not an integer.')
+            try:
+                value = int(value)
+            except (TypeError, ValueError):
+                raise TypeError(f'{value} is not an integer.')
         if (
                 (self.min_value is not None)
                 and (value < self.min_value)
@@ -91,13 +100,13 @@ class DateField(BaseField):
 
     def _cast_to_date(self, value):
         if isinstance(value, str):
-            date = DateTime.strptime(value, self.date_format)
-        elif isinstance(value, Date):
+            date = dt.datetime.strptime(value, self.date_format)
+        elif isinstance(value, dt.date):
             date = value
-        elif isinstance(value, DateTime):
+        elif isinstance(value, dt.datetime):
             date = value.date()
         elif isinstance(value, float):
-            date = Date.fromtimestamp(value)
+            date = dt.date.fromtimestamp(value)
         else:
             raise TypeError((
                 f'date type casting from {type(value)} is not supported '
@@ -136,3 +145,88 @@ class ChoiceField(BaseField):
             raise ValueError(
                 f'{value} is not one of the valid choices of{self.choices}'
             )
+
+
+class ModelError(Exception):
+    pass
+
+
+@dc.dataclass
+class BaseModel:
+    _objects: ClassVar[list["BaseModel"]] = None
+    # TODO: figure how to implement changes detection
+    _unsaved_changes: ClassVar[bool] = False
+
+    def __post_init__(self, *args, **kwargs):
+        pass
+
+    def __new__(cls, *args, **kwargs):
+        return super().__new__(cls)
+
+    @classmethod
+    def _get_table_name(cls):
+        return utils.camel_to_snake_case(cls.__name__)
+
+    @classmethod
+    def load_data(cls, force=False):
+        if cls._unsaved_changes and not force:
+            raise ModelError('Refusing to reload data from disk '
+                             'with unsaved changes in memory')
+        if not cls._unsaved_changes and cls._objects:
+            return
+        cls._objects = []
+        csv_data_file_path = settings.DATA_DIR.joinpath(cls._get_table_name())
+        if not csv_data_file_path.exists():
+            return
+        with open(csv_data_file_path, 'r', newline='') as csv_data_file:
+            dict_reader = csv.DictReader(csv_data_file, dialect=csv.excel_tab)
+            for entry in dict_reader:
+                cls.add_object(cls(**entry))
+            cls._mark_unchanged()
+
+    @classmethod
+    def save_data(cls):
+        if (
+            not cls._unsaved_changes
+            or not cls._objects
+        ):
+            return
+        csv_data_file_path = settings.DATA_DIR.joinpath(cls._get_table_name())
+        with open(csv_data_file_path, 'w', newline='') as csv_data_file:
+            dict_writer = csv.DictWriter(
+                csv_data_file,
+                tuple(field.name for field in dc.fields(cls)),
+                dialect=csv.excel_tab)
+            dict_writer.writeheader()
+            for _object in cls._objects:
+                dict_writer.writerow(_object._format_for_csv())
+            cls._mark_unchanged()
+
+    def _format_for_csv(self) -> dict[str, str]:
+        as_dict = dc.asdict(self)
+        for key, value in as_dict.items():
+            if isinstance(value, dt.date):
+                as_dict[key] = value.strftime(settings.DATE_FORMAT)
+            else:
+                as_dict[key] = str(value)
+        return as_dict
+
+    @classmethod
+    def add_object(cls, obj):
+        if isinstance(obj, cls):
+            cls._objects.append(obj)
+        else:
+            raise ModelError(
+                f'{obj!r} cannot be added to objects of class {cls!r}')
+
+    @classmethod
+    def get_all(cls):
+        return cls._objects
+
+    @classmethod
+    def _mark_changed(cls):
+        cls._unsaved_changes = True
+
+    @classmethod
+    def _mark_unchanged(cls):
+        cls._unsaved_changes = False

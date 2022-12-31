@@ -4,12 +4,9 @@
 
 Description
 """
-# noinspection PyPep8Naming
-from datetime import (
-    date as Date, datetime as DateTime, timedelta as TimeDelta
-)
+import datetime as dt
 import unittest
-from unittest import TestCase, TestSuite
+from unittest import TestCase
 
 from dal import (
     BaseField, IntegerField, CharField, DateField, ChoiceField
@@ -20,7 +17,7 @@ import settings
 class TestCaseFields(TestCase):
     def helper_assert_equal_with_fail_on_errors(
             self, obj, field_name, input_value,
-            expected_value='SAME_AS_INPUT',
+            expected_value: any = 'SAME_AS_INPUT',
             output_formatter=None,
     ):
         try:
@@ -142,6 +139,14 @@ class TestIntegerField(TestCaseFields):
             demo_object = self.demo_object_factory()
             demo_object.demo_int_field = 'non integer value'
 
+    def test_integer_field_handles_int_castable_string(self):
+        self.helper_assert_equal_with_fail_on_errors(
+            obj=self.demo_object_factory(),
+            field_name='demo_int_field',
+            input_value='1',
+            output_formatter=str,
+        )
+
     def test_integer_field_raises_less_than_min_value(self):
         with self.assertRaisesRegex(ValueError, r'.*min.*value.*'):
             demo_object = self.demo_object_factory(set_min_value=True)
@@ -227,11 +232,11 @@ class TestCharField(TestCaseFields):
 
 class TestDateField(TestCaseFields):
     def setUp(self):
-        self.min_date = DateTime.now() - TimeDelta(days=1)
-        self.max_date = DateTime.now() + TimeDelta(days=1)
+        self.min_date = dt.datetime.now() - dt.timedelta(days=1)
+        self.max_date = dt.datetime.now() + dt.timedelta(days=1)
         self.default_date_format = settings.DATE_FORMAT
         self.modified_date_format = '%d.%m.%Y'
-        self.demo_datetime = DateTime(year=2000, month=1, day=1)
+        self.demo_datetime = dt.datetime(year=2000, month=1, day=1)
         self.default_format_date_string = self.demo_datetime.strftime(
             self.default_date_format)
         self.modified_format_date_string = self.demo_datetime.strftime(
@@ -241,7 +246,7 @@ class TestDateField(TestCaseFields):
             _format = (self.default_date_format if default_format
                        else self.modified_date_format)
 
-            def date_formatter(date: Date):
+            def date_formatter(date: dt.date):
                 return date.strftime(_format)
 
             return date_formatter
@@ -312,13 +317,13 @@ class TestDateField(TestCaseFields):
 
     def test_date_field_raises_earlier_than_min_date(self):
         with self.assertRaisesRegex(ValueError, r'.*min.*date.*'):
-            date = self.min_date - TimeDelta(days=1)
+            date = self.min_date - dt.timedelta(days=1)
             demo_object = self.demo_object_factory(set_min_date=True)
             demo_object.demo_date_field = date
 
     def test_date_field_raises_later_than_max_date(self):
         with self.assertRaisesRegex(ValueError, r'.*max.*date.*'):
-            date = self.max_date + TimeDelta(days=1)
+            date = self.max_date + dt.timedelta(days=1)
             demo_object = self.demo_object_factory(set_max_date=True)
             demo_object.demo_date_field = date
 
@@ -326,7 +331,7 @@ class TestDateField(TestCaseFields):
         date_formatter = self.date_formatter_factory()
         for date in (
                 self.min_date,
-                self.min_date + TimeDelta(days=1),
+                self.min_date + dt.timedelta(days=1),
                 self.max_date,
         ):
             with self.subTest(date=date):
@@ -390,11 +395,11 @@ class TestChoiceField(TestCaseFields):
             demo_object.demo_choice_field = self.invalid_choice
 
 
-def suite_fields():
-    suite = TestSuite()
-    suite.addTests(unittest.makeSuite(TestBaseField))
-    suite.addTests(unittest.makeSuite(TestIntegerField))
-    suite.addTests(unittest.makeSuite(TestCharField))
-    suite.addTests(unittest.makeSuite(TestDateField))
-    suite.addTests(unittest.makeSuite(TestChoiceField))
-    return suite
+# def suite_fields():
+#     suite = TestSuite()
+#     suite.addTests(unittest.makeSuite(TestBaseField))
+#     suite.addTests(unittest.makeSuite(TestIntegerField))
+#     suite.addTests(unittest.makeSuite(TestCharField))
+#     suite.addTests(unittest.makeSuite(TestDateField))
+#     suite.addTests(unittest.makeSuite(TestChoiceField))
+#     return suite
