@@ -7,15 +7,11 @@ Description
 
 import csv
 import dataclasses as dc
-import datetime as dt
-from pathlib import Path
-import unittest
 from unittest import TestCase
 
-from dal import (
-    BaseField, IntegerField, CharField, DateField, ChoiceField,
-    BaseModel, ModelError,
-)
+from dal.fields import (
+    IntegerField, CharField, DateField, )
+from dal.base_model import BaseModel, ModelError
 import settings
 
 DEMO_DATA = (

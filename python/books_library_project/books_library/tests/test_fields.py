@@ -4,12 +4,14 @@
 
 Description
 """
+import dataclasses as dc
 import datetime as dt
 import unittest
 from unittest import TestCase
 
-from dal import (
-    BaseField, IntegerField, CharField, DateField, ChoiceField
+from dal.fields import (
+    BaseField, IntegerField, CharField, DateField, ChoiceField,
+    PrimaryKeyField, ForeignKeyField,
 )
 import settings
 
@@ -55,8 +57,6 @@ class TestBaseField(TestCaseFields):
         self.DemoField = DemoField
         self.DemoClass = DemoClass
         self.demo_object = DemoClass()
-        self.test_value = 1
-        self.modified_value = 2
 
     def tearDown(self) -> None:
         del self.DemoField
@@ -69,45 +69,58 @@ class TestBaseField(TestCaseFields):
             # noinspection PyUnusedLocal
             field = BaseField()
 
+    def test_base_field_has_default_none_value(self):
+        self.assertIsNone(self.demo_object.demo_field)
+
+    def test_base_field_reacts_to_default_value(self):
+        class DemoClassWithDefault:
+            demo_field_with_default = self.DemoField(1)
+
+        self.assertEqual(
+            DemoClassWithDefault().demo_field_with_default, 1)
+
     def test_base_field_sets_private_attribute(self):
-        self.demo_object.demo_field = self.test_value
+        self.demo_object.demo_field = 1
         # noinspection PyUnresolvedReferences
-        self.assertEqual(self.demo_object._demo_field, self.test_value)
+        self.assertEqual(self.demo_object._demo_field, 1)
 
     def test_base_field_gets_private_attribute(self):
-        self.demo_object._demo_field = self.test_value
+        self.demo_object._demo_field = 1
         # noinspection PyUnresolvedReferences
-        self.assertEqual(self.demo_object.demo_field, self.test_value)
+        self.assertEqual(self.demo_object.demo_field, 1)
+
+    def test_base_field_gets_field_instance_when_called_from_owner(self):
+        self.assertIsInstance(self.DemoClass.demo_field, self.DemoField)
 
     def test_base_field_set_reacts_to_validate(self):
         error_message = 'validation failed'
-
         # noinspection PyUnusedLocal
         def validate(*args, **kwargs): raise Exception(error_message)
-
         self.DemoField._validate = validate
         with self.assertRaisesRegex(Exception, error_message):
-            self.demo_object.demo_field = self.test_value
+            self.demo_object.demo_field = 1
 
     def test_base_field_set_reacts_to_preprocess(self):
         # noinspection PyUnusedLocal
-        def preprocess(*args, **kwargs): return self.modified_value
-
+        def preprocess(*args, **kwargs): return 2
         self.DemoField._preprocess = preprocess
-        self.demo_object.demo_field = self.test_value
-        # noinspection PyUnresolvedReferences
-        self.assertEqual(self.demo_object.demo_field,
-                         self.modified_value)
+        self.demo_object.demo_field = 1
+        self.assertEqual(self.demo_object.demo_field, 2)
 
     def test_base_field_set_reacts_to_postprocess(self):
         # noinspection PyUnusedLocal
-        def postprocess(*args, **kwargs): return self.modified_value
-
+        def postprocess(*args, **kwargs): return 2
         self.DemoField._postprocess = postprocess
-        self.demo_object.demo_field = self.test_value
-        # noinspection PyUnresolvedReferences
-        self.assertEqual(self.demo_object.demo_field,
-                         self.modified_value)
+        self.demo_object.demo_field = 1
+        self.assertEqual(self.demo_object.demo_field, 2)
+
+    def test_base_field_reacts_to_format_output_toggle(self):
+        self.demo_object._demo_field = 1
+        self.assertEqual(self.demo_object.demo_field, 1)
+        self.DemoClass.demo_field.enable_format_fields_output()
+        self.assertEqual(self.demo_object.demo_field, '1')
+        self.DemoClass.demo_field.disable_format_fields_output()
+        self.assertEqual(self.demo_object.demo_field, 1)
 
 
 class TestIntegerField(TestCaseFields):
@@ -346,6 +359,15 @@ class TestDateField(TestCaseFields):
                     output_formatter=date_formatter,
                 )
 
+    def test_date_field_reacts_to_format_output(self):
+        demo_object = self.demo_object_factory()
+        demo_object.__class__.demo_date_field.enable_format_fields_output()
+        self.helper_assert_equal_with_fail_on_errors(
+            obj=demo_object,
+            field_name='demo_date_field',
+            input_value=self.default_format_date_string,
+        )
+
 
 class TestChoiceField(TestCaseFields):
     def setUp(self):
@@ -394,6 +416,99 @@ class TestChoiceField(TestCaseFields):
             demo_object = self.demo_object_factory()
             demo_object.demo_choice_field = self.invalid_choice
 
+
+# noinspection PyPep8Naming
+class TestPrimaryKeyField(TestCaseFields):
+    def setUp(self):
+        @dc.dataclass
+        class DemoClass:
+            demo_pk_field: PrimaryKeyField = PrimaryKeyField(None)
+
+        self.DemoClass = DemoClass
+
+    def tearDown(self) -> None:
+        del self.DemoClass
+
+    def test_pk_field_sets_next_pk_on_owner(self):
+        DemoClass = self.DemoClass
+        self.assertTrue(
+            hasattr(DemoClass, DemoClass.demo_pk_field.last_pk_name))
+        # noinspection PyUnresolvedReferences
+        self.assertEqual(
+            getattr(DemoClass, DemoClass.demo_pk_field.last_pk_name), 0)
+
+    def test_pk_field_creates_new_pk_if_no_pk_provided(self):
+        DemoClass = self.DemoClass
+        demo_object = DemoClass()
+        self.assertEqual(demo_object.demo_pk_field, 1)
+        self.assertEqual(
+            getattr(DemoClass, DemoClass.demo_pk_field.last_pk_name), 1)
+
+    def test_pk_field_accepts_existing_value(self):
+        DemoClass = self.DemoClass
+        # noinspection PyTypeChecker
+        demo_object = DemoClass(demo_pk_field='99')
+        self.assertEqual(demo_object.demo_pk_field, 99)
+
+
+# noinspection PyTypeChecker
+class TestForeignKeyField(TestCaseFields):
+    def setUp(self):
+        @dc.dataclass
+        class DemoForeignClass:
+            demo_pk_field: PrimaryKeyField = PrimaryKeyField()
+
+        @dc.dataclass
+        class DemoClass:
+            demo_fk_field: ForeignKeyField = ForeignKeyField(DemoForeignClass)
+
+        self.DemoForeignClass = DemoForeignClass
+        self.DemoClass = DemoClass
+
+    def tearDown(self) -> None:
+        del self.DemoClass
+        del self.DemoForeignClass
+
+    # noinspection PyUnusedLocal
+    def test_fk_field_refuses_non_dataclass(self):
+        class DemoForeignClass:
+            demo_pk_field: PrimaryKeyField = PrimaryKeyField()
+
+        with self.assertRaisesRegex(TypeError, r'.*dataclass.*'):
+            @dc.dataclass
+            class DemoClass:
+                demo_fk_field: ForeignKeyField = ForeignKeyField(
+                    DemoForeignClass)
+
+    # noinspection PyUnusedLocal
+    def test_fk_field_refuses_classes_without_pk(self):
+        @dc.dataclass
+        class DemoForeignClass:
+            pass
+
+        with self.assertRaisesRegex(AttributeError, r'.*p.*k.*'):
+            @dc.dataclass
+            class DemoClass:
+                demo_fk_field: ForeignKeyField = ForeignKeyField(
+                    DemoForeignClass)
+
+    def test_fk_field_set_accepts_foreign_class(self):
+        foreign_object = self.DemoForeignClass('99')
+        demo_object = self.DemoClass(foreign_object)
+        self.assertIs(demo_object.demo_fk_field, foreign_object)
+
+    def test_fk_field_set_accepts_foreign_pk(self):
+        foreign_object = self.DemoForeignClass('99')
+        def get_all(): return [foreign_object]
+        self.DemoForeignClass.get_all = get_all
+        demo_object = self.DemoClass('99')
+        self.assertIs(demo_object.demo_fk_field, foreign_object)
+
+    def test_fk_field_reacts_to_format_toggle(self):
+        foreign_object = self.DemoForeignClass('99')
+        demo_object = self.DemoClass(foreign_object)
+        self.DemoClass.demo_fk_field.enable_format_fields_output()
+        self.assertEqual(demo_object.demo_fk_field, '99')
 
 # def suite_fields():
 #     suite = TestSuite()

@@ -6,21 +6,42 @@ Description
 """
 
 # noinspection PyPep8Naming
-import csv
 import dataclasses as dc
 import datetime as dt
-from typing import ClassVar
 
 import settings
-import utils
 
 
 class BaseField:
+
+    def __init__(self, default=None):
+        self.format_output_active = False
+        self._default = default
+
     def __set_name__(self, owner, name):
-        self.private_name = '_' + name
+        self.owner = owner
+        self.name = name
+        self._name = '_' + name
+
+    def enable_format_fields_output(self):
+        self.format_output_active = True
+
+    def disable_format_fields_output(self):
+        self.format_output_active = False
+
+    # noinspection PyMethodMayBeStatic
+    def format_output(self, value):
+        return str(value)
 
     def __get__(self, obj, obj_type=None):
-        return getattr(obj, self.private_name)
+        if obj is None:
+            value = self
+        else:
+            value = getattr(obj, self._name, self._default)
+            if self.format_output_active:
+            # if getattr(self.owner, self.format_fields_output_name, False):
+                value = self.format_output(value)
+        return value
 
     def __set__(self, obj, value):
         if hasattr(self, '_preprocess'):
@@ -29,15 +50,16 @@ class BaseField:
             self._validate(value)
         if hasattr(self, '_postprocess'):
             value = self._postprocess(value)
-        setattr(obj, self.private_name, value)
-        if hasattr(obj, '_mark_changed'):
-            obj.__class__._mark_changed()
+        setattr(obj, self._name, value)
+        if hasattr(obj, 'mark_changed'):
+            obj.__class__.mark_changed()
 
 
 class IntegerField(BaseField):
-    def __init__(self, min_value=None, max_value=None):
+    def __init__(self, min_value=None, max_value=None, default=None):
         self.min_value = min_value
         self.max_value = max_value
+        super().__init__(default)
 
     def _validate(self, value):
         if not isinstance(value, int):
@@ -60,9 +82,10 @@ class IntegerField(BaseField):
 
 
 class CharField(BaseField):
-    def __init__(self, min_length=None, max_length=None):
+    def __init__(self, min_length=None, max_length=None, default=None):
         self.min_length = min_length
         self.max_length = max_length
+        super().__init__(default)
 
     def _validate(self, value):
         if not isinstance(value, str):
@@ -84,7 +107,7 @@ class CharField(BaseField):
 class DateField(BaseField):
     def __init__(
             self, date_format=settings.DATE_FORMAT,
-            min_date=None, max_date=None
+            min_date=None, max_date=None, default=None
     ):
         self.date_format = date_format
         self.min_date = (
@@ -97,6 +120,10 @@ class DateField(BaseField):
             if max_date is not None
             else None
         )
+        super().__init__(default)
+
+    def format_output(self, value):
+        return dt.date.strftime(value, self.date_format)
 
     def _cast_to_date(self, value):
         if isinstance(value, str):
@@ -134,11 +161,12 @@ class DateField(BaseField):
 
 
 class ChoiceField(BaseField):
-    def __init__(self, choices):
+    def __init__(self, choices, default=None):
         try:
             self.choices = set(choices)
         except TypeError:
             self.choices = {choices}
+        super().__init__(default)
 
     def _validate(self, value):
         if value not in self.choices:
@@ -147,86 +175,55 @@ class ChoiceField(BaseField):
             )
 
 
-class ModelError(Exception):
-    pass
+class PrimaryKeyField(BaseField):
+    last_pk_name = '_last_primary_key'
 
+    def __set_name__(self, owner, name):
+        super().__set_name__(owner, name)
+        setattr(owner, self.last_pk_name, 0)
 
-@dc.dataclass
-class BaseModel:
-    _objects: ClassVar[list["BaseModel"]] = None
-    # TODO: figure how to implement changes detection
-    _unsaved_changes: ClassVar[bool] = False
+    def update_last_pk(self, next_pk):
+        setattr(self.owner, self.last_pk_name, next_pk)
 
-    def __post_init__(self, *args, **kwargs):
-        pass
-
-    def __new__(cls, *args, **kwargs):
-        return super().__new__(cls)
-
-    @classmethod
-    def _get_table_name(cls):
-        return utils.camel_to_snake_case(cls.__name__)
-
-    @classmethod
-    def load_data(cls, force=False):
-        if cls._unsaved_changes and not force:
-            raise ModelError('Refusing to reload data from disk '
-                             'with unsaved changes in memory')
-        if not cls._unsaved_changes and cls._objects:
-            return
-        cls._objects = []
-        csv_data_file_path = settings.DATA_DIR.joinpath(cls._get_table_name())
-        if not csv_data_file_path.exists():
-            return
-        with open(csv_data_file_path, 'r', newline='') as csv_data_file:
-            dict_reader = csv.DictReader(csv_data_file, dialect=csv.excel_tab)
-            for entry in dict_reader:
-                cls.add_object(cls(**entry))
-            cls._mark_unchanged()
-
-    @classmethod
-    def save_data(cls):
-        if (
-            not cls._unsaved_changes
-            or not cls._objects
-        ):
-            return
-        csv_data_file_path = settings.DATA_DIR.joinpath(cls._get_table_name())
-        with open(csv_data_file_path, 'w', newline='') as csv_data_file:
-            dict_writer = csv.DictWriter(
-                csv_data_file,
-                tuple(field.name for field in dc.fields(cls)),
-                dialect=csv.excel_tab)
-            dict_writer.writeheader()
-            for _object in cls._objects:
-                dict_writer.writerow(_object._format_for_csv())
-            cls._mark_unchanged()
-
-    def _format_for_csv(self) -> dict[str, str]:
-        as_dict = dc.asdict(self)
-        for key, value in as_dict.items():
-            if isinstance(value, dt.date):
-                as_dict[key] = value.strftime(settings.DATE_FORMAT)
-            else:
-                as_dict[key] = str(value)
-        return as_dict
-
-    @classmethod
-    def add_object(cls, obj):
-        if isinstance(obj, cls):
-            cls._objects.append(obj)
+    def _preprocess(self, value):
+        if value is self:
+            pk = getattr(self.owner, self.last_pk_name) + 1
+            self.update_last_pk(pk)
         else:
-            raise ModelError(
-                f'{obj!r} cannot be added to objects of class {cls!r}')
+            pk = int(value)
+        return pk
 
-    @classmethod
-    def get_all(cls):
-        return cls._objects
 
-    @classmethod
-    def _mark_changed(cls):
-        cls._unsaved_changes = True
+class ForeignKeyField(BaseField):
+    def __init__(self, foreign_class, default=None):
+        super().__init__(default)
+        if not dc.is_dataclass(foreign_class):
+            raise TypeError("ForeignKey field can only handle dataclasses.")
+        for field in dc.fields(foreign_class):
+            if field.type is PrimaryKeyField:
+                self.foreign_class_pk_field_name = field.name
+                break
+        else:
+            raise AttributeError("Can't create foreign key for "
+                                 f"class {foreign_class!r} as it doesn't "
+                                 f"have a primary key.")
+        self.foreign_class = foreign_class
 
-    @classmethod
-    def _mark_unchanged(cls):
-        cls._unsaved_changes = False
+    def format_output(self, value):
+        return str(getattr(value, self.foreign_class_pk_field_name))
+
+    def _preprocess(self, value):
+        if not isinstance(value, self.foreign_class):
+            foreign_pk = int(value)
+            for obj in self.foreign_class.get_all():
+                if (
+                        dc.asdict(obj)[self.foreign_class_pk_field_name]
+                        == foreign_pk
+                ):
+                    value = obj
+                    break
+            else:
+                raise ValueError(f'foreign key {foreign_pk} not found '
+                                 f'in {self.foreign_class} objects '
+                                 'collection.')
+        return value
