@@ -8,7 +8,6 @@ import csv
 import dataclasses as dc
 from typing import ClassVar
 
-from dal.fields import BaseField
 import settings
 import utils
 
@@ -21,7 +20,6 @@ class ModelError(Exception):
 class BaseModel:
     _objects: ClassVar[list["BaseModel"]] = None
     _unsaved_changes: ClassVar[bool] = False
-    # _format_output_toggler: ClassVar[BaseField] = BaseField()
 
     def __post_init__(self, *args, **kwargs):
         pass

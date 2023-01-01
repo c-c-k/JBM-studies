@@ -39,7 +39,6 @@ class BaseField:
         else:
             value = getattr(obj, self._name, self._default)
             if self.format_output_active:
-            # if getattr(self.owner, self.format_fields_output_name, False):
                 value = self.format_output(value)
         return value
 

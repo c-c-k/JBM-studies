@@ -509,12 +509,3 @@ class TestForeignKeyField(TestCaseFields):
         demo_object = self.DemoClass(foreign_object)
         self.DemoClass.demo_fk_field.enable_format_fields_output()
         self.assertEqual(demo_object.demo_fk_field, '99')
-
-# def suite_fields():
-#     suite = TestSuite()
-#     suite.addTests(unittest.makeSuite(TestBaseField))
-#     suite.addTests(unittest.makeSuite(TestIntegerField))
-#     suite.addTests(unittest.makeSuite(TestCharField))
-#     suite.addTests(unittest.makeSuite(TestDateField))
-#     suite.addTests(unittest.makeSuite(TestChoiceField))
-#     return suite

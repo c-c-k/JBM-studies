@@ -33,6 +33,7 @@ DEMO_DATA = (
 )
 
 
+# noinspection PyPep8Naming
 class TestBaseModel(TestCase):
     def setUp(self):
         self.demo_model_name = 'demo_model'
@@ -134,5 +135,3 @@ class TestBaseModel(TestCase):
             with self.subTest(entry=entry):
                 demo_object = DemoModel(**entry)
                 self.assertIn(demo_object, loaded_objects)
-
-
