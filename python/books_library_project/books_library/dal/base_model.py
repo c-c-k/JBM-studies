@@ -29,7 +29,11 @@ class BaseModel:
 
     @classmethod
     def _get_table_name(cls):
-        return utils.camel_to_snake_case(cls.__name__)
+        table_name = utils.camel_to_snake_case(cls.__name__)
+        table_name = table_name.replace('model', 'data')
+        if settings.DEMO_MODE:
+            table_name = 'demo_' + table_name
+        return table_name
 
     @classmethod
     def load_data(cls, force=False):

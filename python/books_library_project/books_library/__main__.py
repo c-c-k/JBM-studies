@@ -6,9 +6,17 @@
 Description
 """
 
+import controlers
+import settings
+import utils
+
 
 def main():
-    pass
+    if settings.DEMO_MODE:
+        utils.extract_book_data()
+        utils.extract_client_data()
+        utils.gen_loan_data()
+    controlers.main()
 
 
 if __name__ == "__main__":

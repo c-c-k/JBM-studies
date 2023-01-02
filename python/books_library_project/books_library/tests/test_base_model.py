@@ -36,7 +36,11 @@ DEMO_DATA = (
 # noinspection PyPep8Naming
 class TestBaseModel(TestCase):
     def setUp(self):
-        self.demo_model_name = 'demo_model'
+        self.demo_model_name = (
+            'demo_demo_data'
+            if settings.DEMO_MODE
+            else 'demo_data'
+        )
         self.csv_data_file_path = settings.DATA_DIR.joinpath(
             self.demo_model_name)
 

@@ -8,3 +8,4 @@ from pathlib import Path
 
 DATE_FORMAT = "%m/%d/%Y"
 DATA_DIR = Path(__file__).parent.joinpath('data/')
+DEMO_MODE = True
