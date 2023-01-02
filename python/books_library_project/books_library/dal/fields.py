@@ -126,7 +126,10 @@ class DateField(BaseField):
 
     def _cast_to_date(self, value):
         if isinstance(value, str):
-            date = dt.datetime.strptime(value, self.date_format)
+            if value == '':
+                date = None
+            else:
+                date = dt.datetime.strptime(value, self.date_format)
         elif isinstance(value, dt.date):
             date = value
         elif isinstance(value, dt.datetime):
@@ -144,6 +147,8 @@ class DateField(BaseField):
         return self._cast_to_date(value)
 
     def _validate(self, value):
+        if value is None:
+            return
         date = value
         if (
                 (self.min_date is not None)

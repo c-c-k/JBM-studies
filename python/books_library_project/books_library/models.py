@@ -6,6 +6,7 @@ Description
 """
 
 import dataclasses as dc
+import datetime as dt
 
 from dal.base_model import BaseModel
 from dal.fields import (
@@ -13,6 +14,7 @@ from dal.fields import (
     PrimaryKeyField, ForeignKeyField,
 )
 
+LOAN_TYPES = {1: 10, 2: 5, 3:2}
 
 @dc.dataclass
 class BooksModel(BaseModel):

@@ -9,6 +9,7 @@ from enum import Enum
 from typing import Callable
 
 from interface.template import MenuTemplate, SelectionObject
+from models import CustomersModel, BooksModel, LoansModel
 
 
 class Menu:
@@ -20,6 +21,9 @@ class Menu:
     _current_token_map: dict[str, Enum] | None = None
     _current_selection_map: dict[int, SelectionObject] | None = None
     _last_user_input: str | None = None
+    _selected_customer: CustomersModel | None = None
+    _selected_books: list[BooksModel] | None = None
+    _selected_loan: LoansModel | None = None
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
@@ -37,7 +41,7 @@ class Menu:
     def add_menu_templates(self, menu_templates: dict[Enum, MenuTemplate]):
         self._menu_templates.update(menu_templates)
 
-    def execute_menu_template(self, menu_id: Enum | None = None,):
+    def execute_menu_template(self, menu_id: Enum | None = None, ):
         if menu_id is not None:
             self._current_menu = self._menu_templates[menu_id]
         self._print_menu_header()
@@ -58,11 +62,84 @@ class Menu:
         print('=' * 72)
         print(self._current_menu.menu_path)
         print(self._current_menu.menu_header)
+        if self._selected_customer:
+            self._print_customer_info()
+        if self._selected_books:
+            self._print_books_info()
+        if self._selected_loan:
+            self._print_loan_info()
         print('-' * 72)
 
-    def _print_selection_items(self):
-        selection_enumeration = enumerate(self._current_menu.selection_items)
+    def _print_customer_info(self):
+        customer = self._selected_customer
+        customer.enable_format_output()
+        name = (customer.name
+                if len(customer.name) < 20
+                else customer.name[:20] + '...')
+        city = (customer.city
+                if len(customer.city) < 20
+                else customer.city[:20] + '...')
+        print(
+            f'(loaner info: {name}, {customer.age} years old,'
+            f' lives in {city})'
+        )
+        customer.disable_format_output()
+
+    def _print_books_info(self):
+        books = self._selected_books
+        books[0].enable_format_output()
+        info_header = 'books info: '
+        print(info_header, end='')
+        line_len = len(info_header)
+        for book_info in (
+            self._format_book_info(book)
+            for book in books
+        ):
+            if line_len + len(book_info) > 72:
+                print()
+            line_len += len(book_info)
+            print(book_info, end='; ')
+        print(')')
+        books[0].disable_format_output()
+
+    @staticmethod
+    def _format_book_info(book):
+        name = (book.name
+                if len(book.name) < 20
+                else book.name[:20] + '...')
+        author = (book.author
+                  if len(book.author) < 20
+                  else book.author[:20] + '...')
+        return (
+            f'({name}, by {author}, published on {book.year_published},'
+            f' loan type {book.loan_type})'
+        )
+
+    def _print_loan_info(self):
+        loan = self._selected_loan
+        loan.enable_format_output()
+        print(
+            f'(loan start: {loan.loan_date}, return date {loan.return_date}'
+        )
+        loan.disable_format_output()
+
+    def reset_status(self):
+        self._selected_loan = None
+        self._selected_customer = None
+        self._selected_books = None
+
+    def get_status(self):
+        return {
+            'customer': self._selected_customer,
+            'books': self._selected_books,
+            'loan': self._selected_loan,
+        }
+
+    def set_selection(self, object_list):
+        selection_enumeration = enumerate(object_list)
         self._current_selection_map = dict(*selection_enumeration)
+
+    def _print_selection_items(self):
         for sel_id, obj in self._current_selection_map.items():
             print(f'({sel_id}) : {obj.description}')
 
@@ -149,6 +226,17 @@ class Menu:
         self._current_selection_map = None
         self._current_menu = None
         self._last_user_input = None
+
+    def select_customer(self, customer: CustomersModel):
+        self._selected_customer = customer
+
+    def add_book_to_selection(self, book: BooksModel):
+        if self._selected_books is None:
+            self._selected_books = []
+        self._selected_books.append(book)
+
+    def select_loan(self, loan: LoansModel):
+        self._selected_loan = loan
 
     @staticmethod
     def exit():

@@ -6,7 +6,7 @@ Description
 """
 
 import csv
-import datetime
+import datetime as dt
 from pathlib import Path
 from pprint import pprint
 from random import randint
@@ -126,20 +126,23 @@ def gen_loan_data():
     date_format = '%d/%m/%Y'
 
     def gen_loan_date(
-            base: datetime.datetime = datetime.datetime.now()
-    ) -> datetime.datetime:
+            base: dt.datetime = dt.datetime.now()
+    ) -> dt.datetime:
         recent = randint(1, 100) <= 60  # 60% chance for a recent loan
         if recent:
-            offset = datetime.timedelta(days=randint(1, 7))
+            offset = dt.timedelta(days=randint(1, 7))
         else:
-            offset = datetime.timedelta(weeks=randint(2, 200))
+            offset = dt.timedelta(weeks=randint(2, 200))
         return base - offset
 
     def gen_return_date(
-            loan_date_: datetime.datetime
-    ) -> datetime.datetime:
-        offset = datetime.timedelta(days=randint(1, 14))
-        return loan_date_ + offset
+            loan_date_: dt.datetime
+    ) -> dt.datetime:
+        offset = dt.timedelta(days=randint(1, 14))
+        _return_date = loan_date_ + offset
+        return ( _return_date
+                 if _return_date < dt.datetime.now()
+                 else None)
 
     with open(LOAN_DATA, 'w', newline='') as loans_file:
         csv_dict_writer = csv.DictWriter(
@@ -155,7 +158,9 @@ def gen_loan_data():
                 'customer_id': str(randint(1, 100)),
                 'book_id': str(randint(1, 100)),
                 'loan_date': loan_date.strftime(date_format),
-                'return_date': return_date.strftime(date_format)
+                'return_date': (return_date.strftime(date_format)
+                                if return_date is not None
+                                else '')
             }
             csv_dict_writer.writerow(entry)
 

@@ -29,7 +29,6 @@ class MenuTemplate(NamedTuple):
     menu_options: tuple[MenuChoice, ...] = None
     menu_header: str = 'Welcome to the books library.'
     is_selection_menu: bool = False
-    selection_items: list[SelectionObject] = None
     selection_handler_id: Enum = None
     is_custom_input_menu: bool = False
     custom_input_header: str = None
