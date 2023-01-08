@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Tags</title>
+  <link rel="stylesheet" href="../solarized.css" />
+  <style>
+    svg * {
+        fill: #eee8d5;
+        stroke: #93a1a1;
+        stroke-width: 6;
+    }
+  </style>
+</head>
+<body>
+  <h1>Advanced Tags</h1>
+  <ul>
+    <li><a href="#asym_table">Asymmetric table</a></li>
+    <li><a href="#line">SVG Line</a></li>
+    <li><a href="#circle">SVG Circle</a></li>
+    <li><a href="#rectangle">SVG Rectangle</a></li>
+    <li><a href="#polygon">SVG Polygon</a></li>
+  </ul>
+  <hr/>
+  <div>
+    <h2 id="asym_table">Asymmetric Table</h2>
+    <img
+        alt="An asymmetric table with cells 1,1 and 1,2 merged and cells 2,3 and 3,3 merged" src="asymmetric_table.jpg"
+        style="width: 300px; height: 300px;"
+    />
+    <table style="background: #eee8d5; border: 1px solid #93a1a1; width: 300px; height: 300px;">
+      <tr>
+        <td colspan="2">a</td>
+        <td>c</td>
+      </tr>
+      <tr>
+        <td>d</td>
+        <td>e</td>
+        <td rowspan="2">f</td>
+      </tr>
+      <tr>
+        <td>g</td>
+        <td>h</td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <h2>SVG</h2>
+    <h3 id="line">line</h3>
+    <svg width="300" height="300">
+      <line x1="150" y1="50" x2="150" y2="250"></line>
+      <line x1="50" y1="150" x2="250" y2="150"></line>
+      <line x1="150" y1="150" x2="250" y2="50"></line>
+      <line x1="150" y1="150" x2="50" y2="50"></line>
+      <line x1="150" y1="150" x2="50" y2="250"></line>
+      <line x1="150" y1="150" x2="250" y2="250"></line>
+    </svg>
+    <h3 id="circle">circle</h3>
+    <svg width="300" height="300">
+      <circle cx="150" cy="150" r="125"></circle>
+    </svg>
+    <h3 id="rectangle">rectangle</h3>
+    <svg width="300" height="300">
+      <rect x="50" y="50" width="200" height="200"></rect>
+    </svg>
+    <h3 id="polygon">polygon</h3>
+    <svg width="300" height="300">
+      <polygon points="50,150 150,50 250,150 150,250"></polygon>
+    </svg>
+  </div>
+</body>
+</html>
